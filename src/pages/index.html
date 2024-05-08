@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Usuarios</title>
+</head>
+<body>
+  <h1>Lista de Usuarios</h1>
+  <ul id="lista-usuarios"></ul>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // Hacer una solicitud GET a la API de usuarios
+    axios.get('https://jsonplaceholder.typicode.com/users')
+      .then(function (response) {
+        // Manejar la respuesta de la API
+        const usuarios = response.data;
+        const listaUsuarios = document.getElementById('lista-usuarios');
+
+        // Iterar sobre cada usuario y mostrar su nombre en la página
+        usuarios.forEach(function(usuario) {
+          const li = document.createElement('li');
+          li.textContent = usuario.name;
+          listaUsuarios.appendChild(li);
+        });
+      })
+      .catch(function (error) {
+        // Manejar errores si la solicitud falla
+        console.error('Error al obtener usuarios:', error);
+      });
+  </script>
+</body>
+</html>
