@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users List</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.users-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.user {
+  border: 2px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const usersList = document.getElementById("usersList");
+
+  axios.get("https://jsonplaceholder.typicode.com/users")
+    .then(response => {
+      const users = response.data;
+      users.forEach(user => {
+        const listItem = document.createElement("li");
+        listItem.classList.add("user");
+        listItem.innerHTML = `
+          <h2>${user.name}</h2>
+          <p><strong>Username:</strong> ${user.username}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Phone:</strong> ${user.phone}</p>
+        `;
+        usersList.appendChild(listItem);
+      });
+    })
+    .catch(error => {
+      console.error("Error fetching users:", error);
+    });
+});
+  </script>
+</head>
+<body>
+  <header class="navbar">
+    <h1>Users List</h1>
+  </header>
+  <main class="container">
+    <ul class="users-list" id="usersList">
+      <!-- User data will be inserted here -->
+    </ul>
+  </main>
+  <footer class="footer">
+    <p>&copy; 2024 Users List</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+</html>
